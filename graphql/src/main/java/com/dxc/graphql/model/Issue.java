@@ -14,8 +14,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name="Issue")
-@EntityListeners(AuditingEntityListener.class)
-
 public class Issue {
 	@Id
 	private String id;
@@ -26,6 +24,20 @@ public class Issue {
 	private String priority;
 	private String status;
 	
+	public Issue() {
+	}
+	
+	public Issue(String id, String description, String summary, String creatorName, String type, String priority,
+			String status) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.summary = summary;
+		this.creatorName = creatorName;
+		this.type = type;
+		this.priority = priority;
+		this.status = status;
+	}
 	public String getId() {
 		return id;
 	}

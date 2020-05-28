@@ -1,6 +1,6 @@
 package com.dxc.graphql.controller;
 
-import com.dxc.graphql.service.GraphQLService;
+import com.dxc.graphql.service.ProjectGraphQLService;
 import graphql.ExecutionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/rest/books")
+@RequestMapping("/rest/projects")
 @RestController
-public class BookController {
-    private static Logger logger = LoggerFactory.getLogger(BookController.class);
+public class ProjectController {
+
     
-    private GraphQLService graphQLService;
+    private ProjectGraphQLService graphQLService;
     
     @Autowired
-    public BookController(GraphQLService graphQLService) {
+    public ProjectController(ProjectGraphQLService graphQLService) {
         this.graphQLService=graphQLService;
     }
     @PostMapping
-    public ResponseEntity<Object> getAllBooks(@RequestBody String query){
-        logger.info("Entering getAllBooks@BookController");
+    public ResponseEntity<Object> getAllProjects(@RequestBody String query){
+
         ExecutionResult execute = graphQLService.getGraphQL().execute(query);
         return new ResponseEntity<>(execute, HttpStatus.OK);
     }

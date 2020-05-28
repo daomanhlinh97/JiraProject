@@ -12,22 +12,29 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name="Employee")
-@EntityListeners(AuditingEntityListener.class)
 public class Employee {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private String id;
 	private String name;
 	private String emailAddress;
 	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+//	public long getId() {
+//		return id;
+//	}
+//	public void setId(long id) {
+//		this.id = id;
+//	}
+	
+	
 	public String getName() {
 		return name;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public void setName(String name) {
 		this.name = name;

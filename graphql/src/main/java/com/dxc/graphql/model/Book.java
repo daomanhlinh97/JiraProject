@@ -6,7 +6,6 @@ import javax.persistence.Table;
 
 @Table
 @Entity
-
 public class Book {
 	@Id
 	private String isn;

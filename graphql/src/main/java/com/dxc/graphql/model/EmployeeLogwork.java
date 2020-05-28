@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name="EmployeeLogwork")
-@EntityListeners(AuditingEntityListener.class)
 public class EmployeeLogwork {
 	@Id
 	private String id;
