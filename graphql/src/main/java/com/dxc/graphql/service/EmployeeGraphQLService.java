@@ -64,7 +64,7 @@ public class EmployeeGraphQLService {
 
 
 	@PostConstruct
-	private void loadSchema() throws IOException, JSONException, ParseException, org.json.JSONException {
+	private void loadSchema() throws IOException, org.json.JSONException {
 
 		// Get the graphql file
 		pullDataEmployee();
@@ -77,7 +77,7 @@ public class EmployeeGraphQLService {
 	}
 	
 	
-public void pullDataEmployee() throws IOException, JSONException, ParseException, org.json.JSONException{
+public void pullDataEmployee() throws IOException, org.json.JSONException{
 		
 		URL url = new URL("http://localhost:8080/rest/api/2/group/member?groupname=jira-core-users&startAt=0");
         String encoding = Base64.getEncoder().encodeToString("daomanhlinh97:daomanhlinh".getBytes("utf-8"));

@@ -28,13 +28,13 @@ public class AddingIssueDataFetcher implements DataFetcher<Issue> {
 	public Issue get(DataFetchingEnvironment dataFetchingEnvironment) {
 
 		String id = dataFetchingEnvironment.getArgument("id");
-		String creator_name = dataFetchingEnvironment.getArgument("creator_name");
+		String creator_name = dataFetchingEnvironment.getArgument("creatorName");
 		String description = dataFetchingEnvironment.getArgument("description");
 		String priority = dataFetchingEnvironment.getArgument("priority");
 		String status = dataFetchingEnvironment.getArgument("status");
 		String summary = dataFetchingEnvironment.getArgument("summary");
 		String type = dataFetchingEnvironment.getArgument("type");
-		
+//		Date created = dataFetchingEnvironment.getArgument("created");
 		
 		
 		Issue newIssue = new Issue();
@@ -45,6 +45,7 @@ public class AddingIssueDataFetcher implements DataFetcher<Issue> {
 		newIssue.setStatus(status);
 		newIssue.setSummary(summary);
 		newIssue.setType(type);
+//		newIssue.setCreated(created);
     	
     	IssueRepository.save(newIssue);
         return newIssue;

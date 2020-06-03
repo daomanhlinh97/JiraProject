@@ -6,8 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
@@ -59,7 +64,7 @@ public class IssueGraphQLService {
 	}
 
 	@PostConstruct
-	private void loadSchema() throws IOException, JSONException {
+	private void loadSchema() throws IOException, JSONException, ParseException {
 		// Get the graphql file
 		pullDataIssue();
 		File file = resource.getFile();
@@ -71,7 +76,7 @@ public class IssueGraphQLService {
 	}
 	
 	
-	public void pullDataIssue() throws IOException, org.json.JSONException{
+	public void pullDataIssue() throws IOException, org.json.JSONException, ParseException{
 		URL url = new URL("http://localhost:8080/rest/api/2/search?");
         String encoding = Base64.getEncoder().encodeToString("daomanhlinh97:daomanhlinh".getBytes("utf-8"));
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -92,13 +97,20 @@ public class IssueGraphQLService {
         JSONArray issues = obj.getJSONArray("issues");
         for(int i = 0; i<issues.length(); i++) {
         	Issue issue =new Issue();
+        	
         	issue.setId(issues.getJSONObject(i).getString("id"));
-        	issue.setDescription(issues.getJSONObject(i).getJSONObject("fields").getString("description"));
+//        	issue.setDescription(issues.getJSONObject(i).getJSONObject("fields").getString("description"));
+        	if(!issues.getJSONObject(i).getJSONObject("fields").isNull("description")) {
+				issue.setDescription(issues.getJSONObject(i).getJSONObject("fields").getString("description"));
+			}
         	issue.setCreatorName(issues.getJSONObject(i).getJSONObject("fields").getJSONObject("creator").getString("name"));
         	issue.setPriority(issues.getJSONObject(i).getJSONObject("fields").getJSONObject("priority").getString("name"));
         	issue.setSummary(issues.getJSONObject(i).getJSONObject("fields").getString("summary"));
         	issue.setType(issues.getJSONObject(i).getJSONObject("fields").getJSONObject("issuetype").getString("name"));
         	issue.setStatus(issues.getJSONObject(i).getJSONObject("fields").getJSONObject("status").getString("name"));
+       
+        	Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(issues.getJSONObject(i).getJSONObject("fields").getString("created"));
+        	issue.setCreated(issues.getJSONObject(i).getJSONObject("fields").getString("created"));
         	issueRepository.save(issue);
         }
 	}
@@ -116,4 +128,9 @@ public class IssueGraphQLService {
 	public GraphQL getGraphQL() {
 		return graphQL;
 	}
+	
+	public String convertDate(String val) throws ParseException {
+        return "cast('" + new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").parse(val)) + "' as ts)";
+}
 }

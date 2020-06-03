@@ -14,7 +14,8 @@ type Issue{
   status:String
   summary:String
   type:String
+  created:String
 }
 type Mutation {
-  addIssue(id:String!, creator_name:String!,  description:String!,priority:String!,status:String!,summary:String!,type:String!): Issue
+  addIssue(id:String!, creator_name:String!,  description:String!,priority:String!,status:String!,summary:String!,type:String!, created:String!): Issue
 }

@@ -1,5 +1,6 @@
 package com.dxc.graphql.service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +12,8 @@ import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +59,7 @@ public class ProjectGraphQLService {
 	}
 
 	@PostConstruct
-	private void loadSchema() throws IOException {
+	private void loadSchema() throws IOException, JSONException {
 		// Get the graphql file
 		pullDataProject();
 		File file = resource.getFile();
@@ -68,7 +71,7 @@ public class ProjectGraphQLService {
 	}
 	
 	
-	public void pullDataProject() throws IOException{
+	public void pullDataProject() throws IOException, JSONException{
 		URL url = new URL("http://localhost:8080/rest/api/2/project");
         String encoding = Base64.getEncoder().encodeToString("daomanhlinh97:daomanhlinh".getBytes("utf-8"));
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -80,13 +83,20 @@ public class ProjectGraphQLService {
                     + conn.getResponseCode());
         }
         
-        InputStreamReader isr = new InputStreamReader(conn.getInputStream());
-        TypeToken<List<Project>> token = new TypeToken<List<Project>>(){};
-        List<Project> list = new Gson().fromJson(isr, token.getType());
-        for (int i=0;i<list.size();i++)
-        {
-      	  	projectRepository.save(list.get(i));
-        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = br.readLine()) != null) {
+			sb.append(line+"\n");
+		}
+		JSONArray projects = new JSONArray(sb.toString());
+		for(int i = 0; i<projects.length(); i++) {
+			Project project = new Project();
+			project.setName(projects.getJSONObject(i).getString("name"));
+			project.setId(projects.getJSONObject(i).getString("key"));
+			project.setProjectTypeKey(projects.getJSONObject(i).getString("projectTypeKey"));
+			projectRepository.save(project);
+		}
 	}
 	
 	private RuntimeWiring buildRuntimeWiring() {

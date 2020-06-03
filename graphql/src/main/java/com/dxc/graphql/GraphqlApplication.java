@@ -12,9 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
 @SpringBootApplication
-@EnableJpaAuditing
-@Configuration
-@ComponentScan(basePackages = "com.dxc.graphql")
 public class GraphqlApplication {
 
 	public static void main(String[] args) throws IOException {	

@@ -1,16 +1,12 @@
 package com.dxc.graphql.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+
+
+import java.util.Date;
+
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 
 @Entity
 @Table(name="Issue")
@@ -23,6 +19,7 @@ public class Issue {
 	private String type;
 	private String priority;
 	private String status;
+	private String created;
 	
 	public Issue() {
 	}
@@ -79,7 +76,25 @@ public class Issue {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}	
+	}
+
+//	public Date getCreated() {
+//		return created;
+//	}
+//
+//	public void setCreated(Date created) {
+//		this.created = created;
+//	}
+
+	public String getCreated() {
+		return created;
+	}
+
+	public void setCreated(String created) {
+		this.created = created;
+	}
+
+
 	
 	
 }
