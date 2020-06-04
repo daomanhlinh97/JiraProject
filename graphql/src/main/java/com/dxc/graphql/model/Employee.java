@@ -14,18 +14,9 @@ import org.springframework.stereotype.Component;
 @Table(name="Employee")
 public class Employee {
 	@Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private String id;
 	private String name;
 	private String emailAddress;
-	
-//	public long getId() {
-//		return id;
-//	}
-//	public void setId(long id) {
-//		this.id = id;
-//	}
-	
 	
 	public String getName() {
 		return name;

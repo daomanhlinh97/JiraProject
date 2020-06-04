@@ -34,7 +34,6 @@ public class AddingIssueDataFetcher implements DataFetcher<Issue> {
 		String status = dataFetchingEnvironment.getArgument("status");
 		String summary = dataFetchingEnvironment.getArgument("summary");
 		String type = dataFetchingEnvironment.getArgument("type");
-//		Date created = dataFetchingEnvironment.getArgument("created");
 		
 		
 		Issue newIssue = new Issue();

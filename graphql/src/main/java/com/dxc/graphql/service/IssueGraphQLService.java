@@ -99,7 +99,6 @@ public class IssueGraphQLService {
         	Issue issue =new Issue();
         	
         	issue.setId(issues.getJSONObject(i).getString("id"));
-//        	issue.setDescription(issues.getJSONObject(i).getJSONObject("fields").getString("description"));
         	if(!issues.getJSONObject(i).getJSONObject("fields").isNull("description")) {
 				issue.setDescription(issues.getJSONObject(i).getJSONObject("fields").getString("description"));
 			}
@@ -111,6 +110,7 @@ public class IssueGraphQLService {
        
         	Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(issues.getJSONObject(i).getJSONObject("fields").getString("created"));
         	issue.setCreated(issues.getJSONObject(i).getJSONObject("fields").getString("created"));
+        	issue.setProjectName(issues.getJSONObject(i).getJSONObject("fields").getJSONObject("project").getString("name"));
         	issueRepository.save(issue);
         }
 	}
@@ -129,8 +129,5 @@ public class IssueGraphQLService {
 		return graphQL;
 	}
 	
-	public String convertDate(String val) throws ParseException {
-        return "cast('" + new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'").format(
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").parse(val)) + "' as ts)";
-}
+
 }

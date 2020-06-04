@@ -4,6 +4,7 @@ package com.dxc.graphql.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,6 +21,7 @@ public class Issue {
 	private String priority;
 	private String status;
 	private String created;
+	private String projectName;
 	
 	public Issue() {
 	}
@@ -92,6 +94,14 @@ public class Issue {
 
 	public void setCreated(String created) {
 		this.created = created;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 

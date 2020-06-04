@@ -3,7 +3,7 @@ schema{
  mutation:Mutation
 }
 type Query{
-  allIssues: [Issue]
+  allIssues(creatorName: String,projectName:String,datefrom:String, dateto:String): [Issue]
   issue(id: String): Issue
 }
 type Issue{
@@ -15,7 +15,8 @@ type Issue{
   summary:String
   type:String
   created:String
+  projectName: String
 }
 type Mutation {
-  addIssue(id:String!, creator_name:String!,  description:String!,priority:String!,status:String!,summary:String!,type:String!, created:String!): Issue
+  addIssue(id:String!, creator_name:String!,  description:String!,priority:String!,status:String!,summary:String!,type:String!, created:String!,projectName: String!): Issue
 }
